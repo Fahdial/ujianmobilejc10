@@ -44,7 +44,7 @@ const TodoDetailScreen = props => {
                         </Text>
                     </CardItem>
                     <CardItem>
-                        <Button info style={{ padding: 10 }}
+                        <Button style={{ padding: 10 }}
                         onPress={ () => props.navigation.goBack() }>
                             <Text>Back</Text>
                         </Button>

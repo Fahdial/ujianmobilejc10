@@ -1,8 +1,19 @@
 import React from 'react'
 import { Text } from 'react-native'
 import { View, Container, Content, Card, CardItem, H1, Button, Body } from 'native-base'
+import firebase from 'firebase'
 
 const TodoDetailScreen = props => {
+    
+    const { item } = props.navigation.state.params
+
+    const onDeleteTodo = (todoId) => {
+        firebase.database().ref(`/${todoId}`).remove()
+        .then(() => {
+            props.navigation.goBack()
+        })
+    }
+
     return (
         <Container>
             {/* <Content> */}
@@ -13,28 +24,33 @@ const TodoDetailScreen = props => {
                                 Todo: 
                             </H1>
                             <Text>
-                                ID: 
+                                ID: {item.id}
                             </Text>
                         </Body>
                     </CardItem>
                     <CardItem>
                         <Text>
-                            Status: 
+                            Status: {item.status}
                         </Text>
                     </CardItem>
                     <CardItem>
                         <Text>
-                            Date Created: 
+                            Date Created: {item.dateCreated}
                         </Text>
                     </CardItem>
                     <CardItem>
                         <Text>
-                            Date Completed: 
+                            Date Completed: {item.dateCompleted}
                         </Text>
                     </CardItem>
                     <CardItem>
-                        <Button info>
-                            <Text>Go Back</Text>
+                        <Button info style={{ padding: 10 }}
+                        onPress={ () => props.navigation.goBack() }>
+                            <Text>Back</Text>
+                        </Button>
+                        <Button danger style={{ marginLeft: 10, padding: 10 }} 
+                        onPress={ () => onDeleteTodo(item.id) }>
+                            <Text>Delete</Text>
                         </Button>
                     </CardItem>
                 </Card>
